@@ -1,9 +1,13 @@
 package com.biblioteca.domains;
 
+import com.biblioteca.domains.dtos.EditoraDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -13,28 +17,43 @@ public class Editora {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_editora")
-    private int id;
+    private Integer id;
 
     @NotNull @NotBlank
+    @Column(unique = true)
     private String cnpj;
+
 
     @NotNull @NotBlank
     private String razaoSocial;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "editora")
+    private List<Livro> livros = new ArrayList<>();
+
+    public List<Livro> getLivros(){
+        return livros;
+    }
+
     public Editora() {
     }
 
-    public Editora(int id, String cnpj, String razaoSocial) {
+    public Editora(Integer id, String cnpj, String razaoSocial) {
         this.id = id;
         this.cnpj = cnpj;
         this.razaoSocial = razaoSocial;
     }
+    public Editora(EditoraDTO dto) {
+        this.id = dto.getId();
+        this.cnpj = dto.getCnpj();
+        this.razaoSocial = dto.getRazaoSocial();
+    }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

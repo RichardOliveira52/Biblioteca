@@ -1,15 +1,7 @@
 package com.biblioteca.domains.dtos;
 
-import com.biblioteca.domains.Autor;
-import com.biblioteca.domains.Editora;
 import com.biblioteca.domains.Livro;
-import com.biblioteca.domains.enums.Conservacao;
-import com.biblioteca.domains.enums.Status;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -19,7 +11,7 @@ import java.time.LocalDate;
 
 public class LivroDTO {
 
-    private long id;
+    private Long id;
 
     @NotNull(message = "O campo nome não pode ser nulo!")
     @NotBlank(message = "O campo nome não pode ser vazio!")
@@ -42,12 +34,12 @@ public class LivroDTO {
     private BigDecimal valorCompra;
 
     @NotNull(message = "O campo autor não pode ser nulo!")
-    private int autor;
+    private Integer autor;
     private String nomeAutor;
     private String docPessoalAutor;
 
     @NotNull(message = "O campo editora não pode ser nulo!")
-    private int editora;
+    private Integer editora;
     private String cnpjEditora;
     private String razaoSocialEditora;
 
@@ -75,11 +67,12 @@ public class LivroDTO {
         this.conservacao = livro.getConservacao().getId();
     }
 
-    public long getId() {
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -125,12 +118,12 @@ public class LivroDTO {
         this.valorCompra = valorCompra;
     }
 
-    @NotNull(message = "O campo autor não pode ser nulo!")
-    public int getAutor() {
+    public @NotNull(message = "O campo autor não pode ser nulo!") Integer getAutor() {
         return autor;
     }
 
-    public void setAutor(@NotNull(message = "O campo autor não pode ser nulo!") int autor) {
+    public void setAutor(@NotNull(message = "O campo autor não pode ser nulo!") Integer autor) {
+
         this.autor = autor;
     }
 
@@ -151,11 +144,11 @@ public class LivroDTO {
     }
 
     @NotNull(message = "O campo editora não pode ser nulo!")
-    public int getEditora() {
+    public Integer getEditora() {
         return editora;
     }
 
-    public void setEditora(@NotNull(message = "O campo editora não pode ser nulo!") int editora) {
+    public void setEditora(@NotNull(message = "O campo editora não pode ser nulo!") Integer editora) {
         this.editora = editora;
     }
 

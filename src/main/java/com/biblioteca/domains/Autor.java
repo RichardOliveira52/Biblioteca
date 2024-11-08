@@ -1,9 +1,14 @@
 package com.biblioteca.domains;
 
+import com.biblioteca.domains.dtos.AutorDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -13,28 +18,42 @@ public class Autor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_autor")
-    private int id;
+    private Integer id;
 
     @NotNull @NotBlank
     private String nome;
 
     @NotNull @NotBlank
+    @Column(unique = true)
     private String documentoPessoal;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "autor")
+    private List<Livro> livros = new ArrayList<>();
+
+    public List<Livro> getLivros(){
+        return livros;
+    }
 
     public Autor() {
     }
 
-    public Autor(int id, String nome, String documentoPessoal) {
+    public Autor(Integer id, String nome, String documentoPessoal) {
         this.id = id;
         this.nome = nome;
         this.documentoPessoal = documentoPessoal;
     }
+    public Autor(AutorDTO dto) {
+        this.id = dto.getId();
+        this.nome = dto.getNome();
+        this.documentoPessoal = dto.getDocumentoPessoal();
+    }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -66,4 +85,6 @@ public class Autor {
     public int hashCode() {
         return Objects.hash(id, nome, documentoPessoal);
     }
+
+
 }
